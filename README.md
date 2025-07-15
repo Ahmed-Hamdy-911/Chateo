@@ -17,6 +17,14 @@
 
 ---
 
+## 🎨 UI Design (Figma)
+
+You can preview the original Figma design used in this app:
+
+📎 [Chateo UI Kit – Messenger App](https://www.figma.com/community/file/980835105690634391/chateo-ui-kit-messenger-app)
+
+---
+
 ## 🛠️ Technologies
 
 - **Flutter** (State Management: Cubit)
