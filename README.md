@@ -2,13 +2,16 @@
 
 A new Flutter project.
 
+## 🖼 App Screenshots
+
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/079fd5fa-52b8-4893-a9c8-1d9274e98390" width="200" />
-  <img src="https://github.com/user-attachments/assets/784e2e09-6b01-4adb-91a6-a93264737dd5" width="200" />
-  <img src="https://github.com/user-attachments/assets/f1440387-3d29-4730-b310-b262ea8c4887" width="200" />
-  <img src="https://github.com/user-attachments/assets/fd7348d2-c3e7-4f8c-8435-e21583f605f6" width="200" />
-  <img src="https://github.com/user-attachments/assets/7bb36c8a-e160-4c50-a8c5-65838cbf4127" width="200" />
-  <img src="https://github.com/user-attachments/assets/a349b320-5f85-4906-91e9-a0ca9a6b6b3b" width="200" />
-  <img src="https://github.com/user-attachments/assets/6e71989c-b8d0-4ed3-aa50-af65b9481dc5" width="200" />
-  <img src="https://github.com/user-attachments/assets/eecd33ba-7a96-4cc3-ab1c-27634959864b" width="200" />
+  <img src="https://github.com/user-attachments/assets/d6f75ae8-20f4-401a-9e08-86b980453cca" width="200" />
+  <img src="https://github.com/user-attachments/assets/fe0adccd-8324-4eb5-bf98-5a4f4f4513a7" width="200" />
+  <img src="https://github.com/user-attachments/assets/c94e2c3b-d512-4092-b81e-6413be5b64e9" width="200" />
+  <img src="https://github.com/user-attachments/assets/e842b280-ca1d-49cd-9f25-152ab0090e01" width="200" />
+  <img src="https://github.com/user-attachments/assets/918ed050-0b80-49e3-93d8-f2225598e889" width="200" />
+  <img src="https://github.com/user-attachments/assets/26e11304-f731-4bd5-add3-72c60a48bb48" width="200" />
+  <img src="https://github.com/user-attachments/assets/199f0885-dee2-4590-9c5c-2a4ec3a12e8f" width="200" />
+  <img src="https://github.com/user-attachments/assets/7c7e18e2-6f82-486f-9edc-a134b8b466b2" width="200" />
 </div>
+
