@@ -1,7 +1,31 @@
-# Chateo
+# 💬 Chateo - Encrypted Chat App 🛡️
 
-<h3>new Flutter project.</h3>
- 
+**Chateo** is a secure real-time chat application built using **Flutter** and **Firebase**, focused on protecting user data and privacy.
+
+---
+
+## ✨ Features
+
+- 🔐 **Email & Google Authentication** (with email verification)
+- 💬 **One-to-one messaging**
+- 🧾 **End-to-end AES encryption** for messages
+- 👤 **User profiles** with bio and edit support
+- ⏱️ **Timer-based email verification screen**
+- 🗑️ **Delete messages & accounts** securely
+- 🔄 **Real-time updates** using Firebase Firestore
+- 💡 **Remember Me** with secure credential storage (Flutter Secure Storage)
+
+---
+
+## 🛠️ Technologies
+
+- **Flutter** (State Management: Cubit)
+- **Firebase Auth & Firestore**
+- **AES Encryption** (using `encrypt` package)
+- **Flutter Secure Storage** for local secrets
+
+---
+
 ## 🖼 App Screenshots
 
 <div align="center">
@@ -15,4 +39,14 @@
   <img src="https://github.com/user-attachments/assets/f7a801e9-ec3b-46a2-9fa6-2d77f499a346" width="200" />
 
 </div>
+
+---
+
+## 🚀 Getting Started
+
+```bash
+flutter pub get
+flutter run
+ 
+
 
