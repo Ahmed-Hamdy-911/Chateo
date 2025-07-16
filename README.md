@@ -50,6 +50,14 @@ You can preview the original Figma design used in this app:
 
 ---
 
+## 📽️ App Demo Video
+
+Watch the app in action:
+
+▶️ [Watch Demo on Google Drive](https://drive.google.com/file/d/1vK_mUpXrVdHL95rfj0XfLQpyPoNne3Wl/view?usp=sharing)
+
+---
+
 ## 🚀 Getting Started
 
 ```bash
