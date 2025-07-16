@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:chateo/cubits/chat_cubit/chat_states.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../../cache/secure_storage.dart';
@@ -99,6 +100,7 @@ class AuthCubit extends Cubit<AuthStates> {
         name: name,
         email: email,
       );
+      await sendVerification();
       emit(SendVerificationAuthState());
     } on FirebaseAuthException catch (e) {
       String messageError = handleFirebaseException(e);
@@ -122,6 +124,7 @@ class AuthCubit extends Cubit<AuthStates> {
     emit(LoadingAuthState());
     try {
       await _authServices.submitLogin(email: email, password: password);
+      await FirebaseAuth.instance.currentUser!.reload();
 
       bool isVerified = await _authServices.verifyEmailSuccessful();
 
@@ -311,12 +314,14 @@ class AuthCubit extends Cubit<AuthStates> {
 
   // Delete the user's account
   Future<void> deleteUserAccount({String? email, String? password}) async {
+    emit(LoadingAuthState());
     try {
       final user = _authServices.firebaseAuth.currentUser;
       if (user != null) {
         // Re-authenticate based on the provider
         if (user.providerData.any((info) => info.providerId == 'google.com')) {
           await reauthenticateGoogleUser();
+          // emit(ReauthenticateSuccessState());
         } else if (email != null && password != null) {
           await reauthenticateEmailUser(email, password);
         } else {}
@@ -335,5 +340,4 @@ class AuthCubit extends Cubit<AuthStates> {
       emit(DeleteAccountFailureState(e.toString()));
     }
   }
-
 }

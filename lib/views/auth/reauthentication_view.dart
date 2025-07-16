@@ -7,21 +7,21 @@ import 'package:toastification/toastification.dart';
 import '../../../constants/constants.dart';
 import '../../../cubits/auth_cubit/auth_cubit.dart';
 import '../../../cubits/auth_cubit/auth_states.dart';
-import '../../widgets/custom_email_and_password_auth_widget.dart';
-import '../../widgets/custom_loading_widget.dart';
-import '../../widgets/custom_material_button.dart';
-import '../../widgets/custom_text.dart';
-import '../../widgets/custom_toastification.dart';
-import '../verification/verification_email_auth_view.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+import '../widgets/custom_email_and_password_auth_widget.dart';
+import '../widgets/custom_loading_widget.dart';
+import '../widgets/custom_material_button.dart';
+import '../widgets/custom_text.dart';
+import '../widgets/custom_toastification.dart';
+
+class ReauthenticationView extends StatefulWidget {
+  const ReauthenticationView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<ReauthenticationView> createState() => _ReauthenticationViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _ReauthenticationViewState extends State<ReauthenticationView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
@@ -52,6 +52,7 @@ class _LoginViewState extends State<LoginView> {
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
         leading: const CustomBackIcon(),
+        title: CustomText(text: "Verify Your Identity"),
       ),
       body: BlocListener<AuthCubit, AuthStates>(
         listener: (context, state) {
@@ -83,14 +84,14 @@ class _LoginViewState extends State<LoginView> {
               message: state.error,
               type: ToastificationType.warning,
             );
-            naviPush(
+          } else if (state is DeleteAccountSuccessState) {
+            showToastification(
               context,
-              widgetName: VerificationEmailAuthView(
-                email: emailController.text,
-              ),
+              title: "Success",
+              message:
+                  "Your account has been deleted successfully. Hope to see you again!",
+              type: ToastificationType.success,
             );
-          } else if (state is SuccessfulLoginAuthState) {
-            naviPushAndRemoveUntil(context, widgetName: const HomeView());
           }
         },
         child: Center(
@@ -105,38 +106,6 @@ class _LoginViewState extends State<LoginView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        RichText(
-                          text: const TextSpan(
-                            children: [
-                              TextSpan(
-                                text: "Log in to  ",
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              TextSpan(
-                                text: "Chateo",
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: kMainColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 15),
-                        const Center(
-                          child: CustomText(
-                            text:
-                                "Welcome back! Sign in using your email to continue us",
-                            textAlign: TextAlign.center,
-                            color: Colors.black54,
-                            fontSize: 14,
-                          ),
-                        ),
                         const SizedBox(height: 20),
                         CustomEmailAndPasswordAuthWidget(
                           emailController: emailController,
@@ -144,28 +113,8 @@ class _LoginViewState extends State<LoginView> {
                         ),
                         const SizedBox(height: 15),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Row(
-                              children: [
-                                Checkbox(
-                                  value: authCubit.rememberMe,
-                                  checkColor: Colors.white,
-                                  side: const BorderSide(color: Colors.grey),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  onChanged: (value) {
-                                    authCubit.toggleRememberMe();
-                                  },
-                                ),
-                                const CustomText(
-                                  fontSize: 14,
-                                  text: "Remember me",
-                                  color: kMainColor,
-                                ),
-                              ],
-                            ),
                             TextButton(
                               onPressed: () async {
                                 if (emailController.text.isNotEmpty) {
@@ -192,12 +141,7 @@ class _LoginViewState extends State<LoginView> {
                         CustomMaterialButton(
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                              await authCubit.saveLoginCredentials(
-                                email: emailController.text,
-                                password: passwordController.text,
-                                rememberMe: authCubit.rememberMe,
-                              );
-                              authCubit.submitLogin(
+                              authCubit.deleteUserAccount(
                                 email: emailController.text,
                                 password: passwordController.text,
                               );
@@ -206,7 +150,7 @@ class _LoginViewState extends State<LoginView> {
                           widget: state is LoadingAuthState
                               ? const CustomLoadingWidget()
                               : const CustomText(
-                                  text: "Log in",
+                                  text: "Sign In Again to Delete Account",
                                   color: Colors.white,
                                   fontSize: 19,
                                   fontWeight: FontWeight.w300,

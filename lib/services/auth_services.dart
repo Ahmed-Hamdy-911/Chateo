@@ -28,7 +28,10 @@ class AuthServices {
   // Send verification email
   Future<void> sendVerification() async {
     try {
+      await _firebaseAuth.currentUser!.reload();
+
       await _firebaseAuth.currentUser!.sendEmailVerification();
+      print('done');
     } on FirebaseException {
       rethrow;
     } catch (e) {

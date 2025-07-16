@@ -1,4 +1,6 @@
+import 'package:chateo/services/auth_services.dart';
 import 'package:chateo/views/auth/profile/edit_profile_view.dart';
+import 'package:chateo/views/auth/reauthentication_view.dart';
 import 'package:chateo/views/widgets/custom_back_icon.dart';
 import 'package:chateo/views/widgets/custom_email_and_password_auth_widget.dart';
 import 'package:chateo/views/widgets/custom_material_button.dart';
@@ -29,8 +31,6 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   final UserController _userController = UserController();
   UserModel? userData;
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +38,13 @@ class _ProfileViewState extends State<ProfileView> {
     return BlocListener<AuthCubit, AuthStates>(
       listener: (context, state) {
         if (state is DeleteAccountSuccessState) {
+          showToastification(
+            context,
+            title: "Success",
+            message:
+                "Your account has been deleted successfully. Hope to see you again!",
+            type: ToastificationType.success,
+          );
           naviPushAndRemoveUntil(context,
               widgetName: const WalkthroughScreen());
         } else if (state is DeleteAccountFailureState) {
@@ -173,74 +180,16 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   void _handleReauthentication(BuildContext context) async {
-    final user = FirebaseAuth.instance.currentUser;
+    var firebaseAuth = AuthServices().firebaseAuth;
+    var user = await firebaseAuth.currentUser;
     if (user != null) {
       if (user.providerData.any((info) => info.providerId == 'google.com')) {
         // Google Sign-In user
         await BlocProvider.of<AuthCubit>(context).deleteUserAccount();
       } else {
         // Email/password user
-        _showReauthenticationDialog(context);
+        naviPush(context, widgetName: const ReauthenticationView());
       }
     }
-  }
-
-  void _showReauthenticationDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: const CustomText(text: "Re-authenticate"),
-          insetPadding: EdgeInsets.zero,
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CustomEmailAndPasswordAuthWidget(
-                  emailController: _emailController,
-                  passwordController: _passwordController)
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const CustomText(
-                text: "Cancel",
-                color: Colors.blue,
-                fontSize: 14,
-              ),
-            ),
-            TextButton(
-              onPressed: () async {
-                final email = _emailController.text.trim();
-                final password = _passwordController.text.trim();
-
-                if (email.isNotEmpty && password.isNotEmpty) {
-                  await BlocProvider.of<AuthCubit>(context).deleteUserAccount(
-                    email: email,
-                    password: password,
-                  );
-                  Navigator.pop(context); // Close the re-authentication dialog
-                } else {
-                  showToastification(
-                    title: "Error",
-                    message: "Please enter your email and password.",
-                    type: ToastificationType.error,
-                    context,
-                  );
-                }
-              },
-              child: const CustomText(
-                text: "Confirm",
-                color: Colors.red,
-                fontSize: 14,
-              ),
-            ),
-          ],
-        );
-      },
-    );
   }
 }
